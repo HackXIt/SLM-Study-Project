@@ -7,6 +7,12 @@ The goal is to implement a very simple REST API in JAVA, but configure and manag
 > 
 > "Everything operates as expected" is the default message. But a service operator can set the message manually to something else (e.g., "Service checks: No power until 5:00 pm"). A service operator can also reset the message to its default message.
 
+# Project-Team
+
+- @HackXIt
+- @thorinaboenke 
+- @funkeydow
+
 # REST API Goals
 
  - [ ] The service should be able to manage a centrally stored message.
