@@ -1,4 +1,4 @@
-﻿package at.fhtw.bic.slmstudyproject.controller;
+package at.fhtw.bic.slmstudyproject.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +16,7 @@ public class DemoController {
     }
 
     @GetMapping("/uptime/hours")
-    public double claculateUptimeHours(@RequestParam double relative) {
+    public double calculateUptimeHours(@RequestParam double relative) {
         double hoursOfMonth = 24*30;
         double definedUptimeInPercent = relative / 100;
         return hoursOfMonth * definedUptimeInPercent; // uptime in hours
