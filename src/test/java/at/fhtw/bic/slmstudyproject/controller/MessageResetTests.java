@@ -15,13 +15,23 @@ public class MessageResetTests {
     MockMvc mockMvc;
     
     @Test
-    void MessageResetTest() throws Exception {
+    void GetMessageResetTest() throws Exception {
         mockMvc.perform(get("/api/message/reset"))
                 .andExpect(status().is2xxSuccessful());
     }
     
     @Test
-    void MessageResetWithoutDefaultTest() throws Exception {
+    void GetMessageDefaultTest() throws Exception {
+        mockMvc.perform(get("/api/message/default?msg=Hello"))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(result -> result.getResponse().getContentAsString().contentEquals("Hello"));
+        mockMvc.perform(get("/api/message/default?msg="))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(result -> result.getResponse().getContentAsString().isBlank());
+    }
+    
+    @Test
+    void GetMessageResetWithoutDefaultTest() throws Exception {
         mockMvc.perform(get("/api/message/default?msg="))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(result -> result.getResponse().getContentAsString().isBlank());
