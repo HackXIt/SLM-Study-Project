@@ -10,4 +10,9 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 public class MessageResetTests {
     
+    @Autowired
+    MockMvc mockMvc;
+    
+    
+    
 }
