@@ -20,4 +20,15 @@ public class MessageResetTests {
                 .andExpect(status().is2xxSuccessful());
     }
     
+    @Test
+    void MessageResetWithoutDefaultTest() throws Exception {
+        mockMvc.perform(get("/api/message/default?msg="))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(result -> result.getResponse().getContentAsString().isBlank());
+        mockMvc.perform(get("/api/message/reset"))
+                .andExpect(status().is5xxServerError())
+                .andExpect(result -> result.getResponse().getContentAsString().contentEquals("Default message is not set."));
+                
+    }
+    
 }
