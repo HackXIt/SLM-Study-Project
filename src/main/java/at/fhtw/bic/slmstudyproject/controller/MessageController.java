@@ -1,0 +1,31 @@
+package at.fhtw.bic.slmstudyproject.controller;
+
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpMediaTypeException;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/message")
+public class MessageController {
+    
+    private String apiMessageDefault = "Status Ok";
+    private String currentApiMessage;
+    
+    @GetMapping("/reset")
+    public ResponseEntity<String> MessageReset() {
+        if(apiMessageDefault.isBlank()) {
+            return new ResponseEntity<>("Default message is not set.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        currentApiMessage = apiMessageDefault;
+        return new ResponseEntity<>(currentApiMessage, HttpStatus.OK);
+    }
+    
+    @GetMapping("/default")
+    public ResponseEntity<String> SetMessageDefault(@RequestParam(required=true) String msg) {
+        apiMessageDefault = msg;
+        return new ResponseEntity<>(apiMessageDefault, HttpStatus.OK);
+    }
+    
+}
