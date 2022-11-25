@@ -12,6 +12,17 @@ public class MessageController {
     
     private String apiMessageDefault = "Status Ok";
     private String currentApiMessage;
+
+    @GetMapping("")
+    public ResponseEntity<String> Message() {
+        if(currentApiMessage == null) {
+            if (apiMessageDefault.isBlank()) {
+                return new ResponseEntity<>("No default message or message set", HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+            return new ResponseEntity<>(apiMessageDefault, HttpStatus.OK);
+            }
+        return new ResponseEntity<>(currentApiMessage, HttpStatus.OK);
+    }
     
     @GetMapping("/reset")
     public ResponseEntity<String> MessageReset() {
