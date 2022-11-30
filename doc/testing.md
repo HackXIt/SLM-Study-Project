@@ -13,7 +13,7 @@ In the following sections, we document what our unit tests do. The sections are 
 
 # feature/api-message-reset
 
-The `reset` feature is supposed to delete the current message set in the server.
+The `reset` feature is supposed to **reset** the current message to a <u>default message</u> of the server.
 We adapted the requirement a little bit, which is why we also added an API path for a `default` message, so we can make sure that there's a message to begin with, without requiring the implementation of `set`.
 
 Since the state of the webpage stays the same throughout test execution, we needed to set a test execution order, otherwise one test might affect the success of another.
