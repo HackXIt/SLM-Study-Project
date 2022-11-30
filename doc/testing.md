@@ -14,13 +14,13 @@ Initially a test class looks like the following example:
 
 As intended in TDD, even this simple test class will initially fail:
 
-![MessageControllerClass_build-error.jpg](.\attachments\MessageControllerClass_build-error.jpg)
+![MessageControllerClass_build-error.jpg](https://github.com/HackXIt/SLM-Study-Project/blob/documentation/doc/attachments/MessageControllerClass_build-error.jpg)
 
 The process of TDD dictates, that we now refactor our code to fix this initial error:
 
 ![MessageControllerClass_build-fix.jpg](https://github.com/HackXIt/SLM-Study-Project/blob/documentation/doc/attachments/MessageControllerClass_build-fix.jpg)
 
-![MessageControllerClass_build-fix2.jpg](.\attachments\MessageControllerClass_build-fix2.jpg)
+![MessageControllerClass_build-fix2.jpg](https://github.com/HackXIt/SLM-Study-Project/blob/documentation/doc/attachments/MessageControllerClass_build-fix2.jpg)
 
 ![MessageControllerClass_git-commits.jpg](https://github.com/HackXIt/SLM-Study-Project/blob/documentation/doc/attachments/MessageControllerClass_git-commits.jpg)
 
