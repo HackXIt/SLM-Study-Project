@@ -9,6 +9,49 @@ In the following sections, we document what our unit tests do. The sections are 
 
 # feature/api-message
 
+The `message` feature returns either the current service message or the default service message, if the `current` message hasn't been set.
+
+## GetMessageTest
+
+This testcase verifies the existance and functionality of the APi-path `api/message`.
+On initial start of the webpage, the service doesn't have an initialized `message`, which is why we provide a default message.
+The initial default message is statically set to `Status OK`.
+
+We expect a positive response `200` of the API call and verify the contents of the response against our expected static message.
+
+```java
+@Test
+@Order(1)
+void GetMessageTest() throws Exception {
+    mockMvc.perform(get("/api/message"))
+        .andExpect(status().is2xxSuccessful())
+        .andExpect(result -> result.getResponse().getContentAsString().contentEquals("Status Ok"));
+}
+```
+
+## GetMessageWithoutDefaultTest
+
+This testcase verifies the expected failure of `api/message`.
+
+We expect a failure of `api/message` when the `default` message was set to a blank message, without having called `api/message/set` to initialize the `current` message.
+
+This failure prevents a segmentation fault, because when trying to return a `null` current message, it would mean we have an access violation.
+
+```java
+@Test
+@Order(2)
+void GetMessageWithoutDefaultTest() throws Exception {
+    mockMvc.perform(get("/api/message/default?msg="))
+        .andExpect(status().is2xxSuccessful())
+        .andExpect(result -> result.getResponse().getContentAsString().isBlank());
+    mockMvc.perform(get("/api/message"))
+        .andExpect(status().is5xxServerError())
+        .andExpect(result -> result.getResponse().getContentAsString().contentEquals("No default message or message set"));
+}
+```
+
+
+
 # feature/api-message-set
 
 # feature/api-message-reset
@@ -28,11 +71,11 @@ This test is executed **first**.
 
 ```java
 @Test
-    @Order(1)
-    void GetMessageResetTest() throws Exception {
-        mockMvc.perform(get("/api/message/reset"))
-                .andExpect(status().is2xxSuccessful());
-    }
+@Order(1)
+void GetMessageResetTest() throws Exception {
+    mockMvc.perform(get("/api/message/reset"))
+        .andExpect(status().is2xxSuccessful());
+}
 ```
 
 ## GetMessageDefaultTest
@@ -46,15 +89,15 @@ This test is executed **second**.
 
 ```java
 @Test
-    @Order(2)
-    void GetMessageDefaultTest() throws Exception {
-        mockMvc.perform(get("/api/message/default?msg=Hello"))
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(result -> result.getResponse().getContentAsString().contentEquals("Hello"));
-        mockMvc.perform(get("/api/message/default?msg="))
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(result -> result.getResponse().getContentAsString().isBlank());
-    }
+@Order(2)
+void GetMessageDefaultTest() throws Exception {
+    mockMvc.perform(get("/api/message/default?msg=Hello"))
+        .andExpect(status().is2xxSuccessful())
+        .andExpect(result -> result.getResponse().getContentAsString().contentEquals("Hello"));
+    mockMvc.perform(get("/api/message/default?msg="))
+        .andExpect(status().is2xxSuccessful())
+        .andExpect(result -> result.getResponse().getContentAsString().isBlank());
+}
 ```
 
 ## GetMessageResetWithoutDefaultTest
@@ -68,16 +111,15 @@ This test is executed **last**, because it leaves the default message **blank**,
 
 ```java
 @Test
-    @Order(3)
-    void GetMessageResetWithoutDefaultTest() throws Exception {
-        mockMvc.perform(get("/api/message/default?msg="))
-                .andExpect(status().is2xxSuccessful())
-                .andExpect(result -> result.getResponse().getContentAsString().isBlank());
-        mockMvc.perform(get("/api/message/reset"))
-                .andExpect(status().is5xxServerError())
-                .andExpect(result -> result.getResponse().getContentAsString().contentEquals("Default message is not set."));
-                
-    }
+@Order(3)
+void GetMessageResetWithoutDefaultTest() throws Exception {
+    mockMvc.perform(get("/api/message/default?msg="))
+        .andExpect(status().is2xxSuccessful())
+        .andExpect(result -> result.getResponse().getContentAsString().isBlank());
+    mockMvc.perform(get("/api/message/reset"))
+        .andExpect(status().is5xxServerError())
+        .andExpect(result -> result.getResponse().getContentAsString().contentEquals("Default message is not set."));
+}
 ```
 
 ## <a name="process-example"></a> Example process in feature branch
