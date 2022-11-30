@@ -10,7 +10,7 @@ The details about that, are in our CI/CD documentation.
 To implement a test, we used the testing features of the [spring boot framework](https://docs.spring.io/spring-boot/docs/1.5.2.RELEASE/reference/html/boot-features-testing.html).
 Initially a test class looks like the following example:
 
-![image-20221125170335458](.\attachments\image-20221125170335458.png)
+![image-20221125170335458](https://github.com/HackXIt/SLM-Study-Project/blob/documentation/doc/attachments/image-20221125170335458.png)
 
 As intended in TDD, even this simple test class will initially fail:
 
@@ -18,11 +18,11 @@ As intended in TDD, even this simple test class will initially fail:
 
 The process of TDD dictates, that we now refactor our code to fix this initial error:
 
-![MessageControllerClass_build-fix.jpg](.\attachments\MessageControllerClass_build-fix.jpg)
+![MessageControllerClass_build-fix.jpg](https://github.com/HackXIt/SLM-Study-Project/blob/documentation/doc/attachments/MessageControllerClass_build-fix.jpg)
 
 ![MessageControllerClass_build-fix2.jpg](.\attachments\MessageControllerClass_build-fix2.jpg)
 
-![MessageControllerClass_git-commits.jpg](.\attachments\MessageControllerClass_git-commits.jpg)
+![MessageControllerClass_git-commits.jpg](https://github.com/HackXIt/SLM-Study-Project/blob/documentation/doc/attachments/MessageControllerClass_git-commits.jpg)
 
 Great! 
 
@@ -37,7 +37,7 @@ To help us implement our testcases for the actual API paths, we required some ad
 For this we used the provided `MockMvc`, which is a complete `mocking` client to do web requests. 
 The client is very useful, since it provides mechanism to `assert` and `expect` results from the reponse of the API, which allowed us to design our API with TDD as process.
 
-![MockMvc_usage-explanation.jpg](.\attachments\MockMvc_usage-explanation.jpg)
+![MockMvc_usage-explanation.jpg](https://github.com/HackXIt/SLM-Study-Project/blob/documentation/doc/attachments/MockMvc_usage-explanation.jpg)
 
 In the feature branch, the process was continued until all requirements of the feature were implemented and commited. 
 
