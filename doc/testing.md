@@ -1,8 +1,8 @@
 # Testing
 
-Since our development process was TDD (**<u>t</u>**est-**<u>d</u>**riven-**<u>d</u>**evelopment), tests were implemented before any implementation. To explain this process of development in detail, an [example is provided further below](#process-example), which dives into the development of the branch `feature/api-message-reset`.
+Since our development process was TDD (<b><u>t</u></b>est-<b><u>d</u></b>riven-<b><u>d</u></b>evelopment), tests were implemented before any implementation. To explain this process of development in detail, an [example is provided further below](#process-example), which dives into the development of the branch `feature/api-message-reset`.
 
-In addition to our process, we needed to implement **<u>c</u>**ontinous **<u>i</u>**ntegration (CI) and **<u>c</u>**ontinous **<u>d</u>**eployment (CD) pipelines. Those pipelines used the default maven commands, to build our project for artifacts and execute the available unit tests on them.
+In addition to our process, we needed to implement <b><u>c</u></b>ontinous <b><u>i</u></b>ntegration (CI) and <b><u>c</u></b>ontinous <b><u>d</u></b>eployment (CD) pipelines. Those pipelines used the default maven commands, to build our project for artifacts and execute the available unit tests on them.
 The details about that, are in our CI/CD documentation.
 
 ## <a name="process-example"></a> Example process in feature branch
