@@ -36,12 +36,12 @@ This is a view of the board in the middle of development:![Project-board_1.png](
 
 To change the status of an issue, a collaborator can drag the issue-card from one column to the next:
 
-![Project-board_2.png](https://github.com/HackXIt/SLM-Study-Project/blob/documentation/doc/attachments/Project-board_2.png)
+![Project-board_2.jpg](https://github.com/HackXIt/SLM-Study-Project/blob/documentation/doc/attachments/Project-board_2.jpg)
 
 This is repeated for all other states, an issue can have during development:
 
-![Project-board_3.png](https://github.com/HackXIt/SLM-Study-Project/blob/documentation/doc/attachments/Project-board_3.png)
+![Project-board_3.jpg](https://github.com/HackXIt/SLM-Study-Project/blob/documentation/doc/attachments/Project-board_3.jpg)
 
-![Project-board_4.png](https://github.com/HackXIt/SLM-Study-Project/blob/documentation/doc/attachments/Project-board_4.png)
+![Project-board_4.jpg](https://github.com/HackXIt/SLM-Study-Project/blob/documentation/doc/attachments/Project-board_4.jpg)
 
 And that's how it was done throughout the project. ;)
