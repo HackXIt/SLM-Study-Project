@@ -5,6 +5,81 @@ Since our development process was TDD (<b><u>t</u></b>est-<b><u>d</u></b>riven-<
 In addition to our process, we needed to implement <b><u>c</u></b>ontinous <b><u>i</u></b>ntegration (CI) and <b><u>c</u></b>ontinous <b><u>d</u></b>eployment (CD) pipelines. Those pipelines used the default maven commands, to build our project for artifacts and execute the available unit tests on them.
 The details about that, are in our CI/CD documentation.
 
+In the following sections, we document what our unit tests do. The sections are seperated by feature branch, meaning each section contains a different API path with different corresponding testcases.
+
+# feature/api-message
+
+# feature/api-message-set
+
+# feature/api-message-reset
+
+The `reset` feature is supposed to delete the current message set in the server.
+We adapted the requirement a little bit, which is why we also added an API path for a `default` message, so we can make sure that there's a message to begin with, without requiring the implementation of `set`.
+
+Since the state of the webpage stays the same throughout test execution, we needed to set a test execution order, otherwise one test might affect the success of another.
+
+## GetMessageResetTest
+
+This testcase verifies the existence and functionality of the API-path `/api/message/reset` by expecting a response of `200` when calling it with the `MockMvc` client.
+
+By checking the response, we successfully tested the functionality of `reset`, since that's what it responds with.
+
+This test is executed **first**.
+
+```java
+@Test
+    @Order(1)
+    void GetMessageResetTest() throws Exception {
+        mockMvc.perform(get("/api/message/reset"))
+                .andExpect(status().is2xxSuccessful());
+    }
+```
+
+## GetMessageDefaultTest
+
+This testcase verifies the `default` API-path functionality.
+
+It sets the default message, verifies the response of the API call and then verifies the contents of the response.
+After successful execution of this path, it resets the default message to the original state and verifies the result.
+
+This test is executed **second**.
+
+```java
+@Test
+    @Order(2)
+    void GetMessageDefaultTest() throws Exception {
+        mockMvc.perform(get("/api/message/default?msg=Hello"))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(result -> result.getResponse().getContentAsString().contentEquals("Hello"));
+        mockMvc.perform(get("/api/message/default?msg="))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(result -> result.getResponse().getContentAsString().isBlank());
+    }
+```
+
+## GetMessageResetWithoutDefaultTest
+
+This testcase verifies the expected failure of the `reset` API-path.
+
+When `reset` is called without a `default` message, an internal server error occurs, since it requires the default message to be set.
+We defined this testcase, to make sure that the implementation will use the default message for calling `reset`, because we defined that `reset` doesn't clear the message, but instead resets the message to a default one. Without a default message, this API cannot be called.
+
+This test is executed **last**, because it leaves the default message **blank**, which would fail other testcases.
+
+```java
+@Test
+    @Order(3)
+    void GetMessageResetWithoutDefaultTest() throws Exception {
+        mockMvc.perform(get("/api/message/default?msg="))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(result -> result.getResponse().getContentAsString().isBlank());
+        mockMvc.perform(get("/api/message/reset"))
+                .andExpect(status().is5xxServerError())
+                .andExpect(result -> result.getResponse().getContentAsString().contentEquals("Default message is not set."));
+                
+    }
+```
+
 ## <a name="process-example"></a> Example process in feature branch
 
 To implement a test, we used the testing features of the [spring boot framework](https://docs.spring.io/spring-boot/docs/1.5.2.RELEASE/reference/html/boot-features-testing.html).
