@@ -44,7 +44,7 @@ steps:
       run: mvn -B package --file pom.xml
 ```
 
-#The Testing
+# The Testing
 
 The test are started with the build process of maven by the following lines:
 
@@ -53,7 +53,7 @@ The test are started with the build process of maven by the following lines:
       run: mvn -B package --file pom.xml
 ```
 
-#The Download
+# The Download
 
 To be able to download the build artifact the pipelines are finished with the following settings:
 
