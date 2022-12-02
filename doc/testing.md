@@ -7,6 +7,8 @@ The details about that, are in our CI/CD documentation.
 
 In the following sections, we document what our unit tests do. The sections are seperated by feature branch, meaning each section contains a different API path with different corresponding testcases.
 
+Since the internal state of the application stays the same throughout test execution, we needed to set the annotation `@DirtiesContext` for some testcases, otherwise one test could affect the expected initial state of another.
+
 # feature/api-message
 
 The `message` feature returns either the current service message or the default service message, if the `current` message hasn't been set.
@@ -24,8 +26,8 @@ We expect a positive response `200` of the API call and verify the contents of t
 @Order(1)
 void GetMessageTest() throws Exception {
     mockMvc.perform(get("/api/message"))
-        .andExpect(status().is2xxSuccessful())
-        .andExpect(result -> result.getResponse().getContentAsString().contentEquals("Status Ok"));
+            .andExpect(status().is2xxSuccessful())
+            .andExpect(content().string("Status Ok"));
 }
 ```
 
@@ -40,13 +42,15 @@ This failure prevents a segmentation fault, because when trying to return a `nul
 ```java
 @Test
 @Order(2)
+// Makes context dirty because: defaultMessage will be blank
+@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
 void GetMessageWithoutDefaultTest() throws Exception {
     mockMvc.perform(get("/api/message/default?msg="))
-        .andExpect(status().is2xxSuccessful())
-        .andExpect(result -> result.getResponse().getContentAsString().isBlank());
+            .andExpect(status().is2xxSuccessful())
+            .andExpect(content().string(""));
     mockMvc.perform(get("/api/message"))
-        .andExpect(status().is5xxServerError())
-        .andExpect(result -> result.getResponse().getContentAsString().contentEquals("No default message or message set"));
+            .andExpect(status().is5xxServerError())
+            .andExpect(content().string("No default message or message set"));
 }
 ```
 
@@ -59,8 +63,6 @@ void GetMessageWithoutDefaultTest() throws Exception {
 The `reset` feature is supposed to **reset** the current message to a <u>default message</u> of the server.
 We adapted the requirement a little bit, which is why we also added an API path for a `default` message, so we can make sure that there's a message to begin with, without requiring the implementation of `set`.
 
-Since the state of the webpage stays the same throughout test execution, we needed to set a test execution order, otherwise one test might affect the success of another.
-
 ## GetMessageResetTest
 
 This testcase verifies the existence and functionality of the API-path `/api/message/reset` by expecting a response of `200` when calling it with the `MockMvc` client.
@@ -68,13 +70,16 @@ This testcase verifies the existence and functionality of the API-path `/api/mes
 By checking the response, we successfully tested the functionality of `reset`, since that's what it responds with.
 
 This test is executed **first**.
+It affects the internal state of `currentApiMessage` by setting it to the content of `apiMessageDefault`.
 
 ```java
 @Test
 @Order(1)
+// Makes context dirty because: currentMessage will be set to "Status Ok"
+@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
 void GetMessageResetTest() throws Exception {
     mockMvc.perform(get("/api/message/reset"))
-        .andExpect(status().is2xxSuccessful());
+            .andExpect(status().is2xxSuccessful());
 }
 ```
 
@@ -86,17 +91,20 @@ It sets the default message, verifies the response of the API call and then veri
 After successful execution of this path, it resets the default message to the original state and verifies the result.
 
 This test is executed **second**.
+It affects the internal state of `apiMessageDefault` by setting it to a blank string.
 
 ```java
 @Test
 @Order(2)
+// Makes context dirty because: defaultMessage will be blank
+@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
 void GetMessageDefaultTest() throws Exception {
     mockMvc.perform(get("/api/message/default?msg=Hello"))
-        .andExpect(status().is2xxSuccessful())
-        .andExpect(result -> result.getResponse().getContentAsString().contentEquals("Hello"));
+            .andExpect(status().is2xxSuccessful())
+            .andExpect(content().string("Hello"));
     mockMvc.perform(get("/api/message/default?msg="))
-        .andExpect(status().is2xxSuccessful())
-        .andExpect(result -> result.getResponse().getContentAsString().isBlank());
+            .andExpect(status().is2xxSuccessful())
+            .andExpect(content().string(""));
 }
 ```
 
@@ -107,18 +115,21 @@ This testcase verifies the expected failure of the `reset` API-path.
 When `reset` is called without a `default` message, an internal server error occurs, since it requires the default message to be set.
 We defined this testcase, to make sure that the implementation will use the default message for calling `reset`, because we defined that `reset` doesn't clear the message, but instead resets the message to a default one. Without a default message, this API cannot be called.
 
-This test is executed **last**, because it leaves the default message **blank**, which would fail other testcases.
+This test is executed **third**.
+It affects the internal state of `apiMessageDefault` by setting it to a blank string.
 
 ```java
 @Test
 @Order(3)
+// Makes context dirty because: defaultMessage will be blank
+@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
 void GetMessageResetWithoutDefaultTest() throws Exception {
     mockMvc.perform(get("/api/message/default?msg="))
-        .andExpect(status().is2xxSuccessful())
-        .andExpect(result -> result.getResponse().getContentAsString().isBlank());
+            .andExpect(status().is2xxSuccessful())
+            .andExpect(content().string(""));
     mockMvc.perform(get("/api/message/reset"))
-        .andExpect(status().is5xxServerError())
-        .andExpect(result -> result.getResponse().getContentAsString().contentEquals("Default message is not set."));
+            .andExpect(status().is5xxServerError())
+            .andExpect(content().string("Default message is not set."));
 }
 ```
 
