@@ -58,6 +58,44 @@ void GetMessageWithoutDefaultTest() throws Exception {
 
 # feature/api-message-set
 
+The `set` feature is supposed to **set** the current message of the server to a provided message.
+We did not set any limitations due to the small scale of the project, as such the API simply sets the message without checking the provided string.
+
+## GetMessageSetTest
+
+This test verifies the normal behaviour of the API call, by setting the current message to a string and verifying the response header as well as the content, which should correspond to the message set.
+
+```java
+@Test
+@Order(1)
+void GetMessageSetTest() throws Exception {
+    mockMvc.perform(get("/api/message/set?m=Giraffe"))
+        .andExpect(status().is2xxSuccessful())
+        .andExpect(content().string("Giraffe"));
+}
+```
+
+## GetMessageSetMultipleWordsTest
+
+This test verifies if the message can be set to a message containing spaces, which implicitly gets parsed to a correct URL by the mocking client.
+In practice, the used test string would look like so:
+
+`/api/message/set?m=The+giraffe+is+a+large+African+hoofed+mammal+belonging+to+the+genus+Giraffa`
+
+The message is again verified in the response header as well as in the content.
+
+```java
+@Test
+@Order(2)
+void GetMessageSetMultipleWordsTest() throws Exception {
+    mockMvc.perform(get("/api/message/set?m=The giraffe is a large African hoofed mammal belonging to the genus Giraffa"))
+        .andExpect(status().is2xxSuccessful())
+        .andExpect(content().string("The giraffe is a large African hoofed mammal belonging to the genus Giraffa"));
+}
+```
+
+
+
 # feature/api-message-reset
 
 The `reset` feature is supposed to **reset** the current message to a <u>default message</u> of the server.
