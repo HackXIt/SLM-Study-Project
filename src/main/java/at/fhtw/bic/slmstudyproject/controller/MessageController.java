@@ -32,11 +32,17 @@ public class MessageController {
         currentApiMessage = apiMessageDefault;
         return new ResponseEntity<>(currentApiMessage, HttpStatus.OK);
     }
-    
+
     @GetMapping("/default")
     public ResponseEntity<String> SetMessageDefault(@RequestParam(required=true) String msg) {
         apiMessageDefault = msg;
         return new ResponseEntity<>(apiMessageDefault, HttpStatus.OK);
+    }
+
+    @GetMapping("/set")
+    public ResponseEntity<String> SetMessage(@RequestParam(name="m", required=true) String msg){
+        currentApiMessage = msg;
+        return new ResponseEntity<>(currentApiMessage, HttpStatus.OK);
     }
     
 }
