@@ -3,7 +3,7 @@
 In order to build an executeable jar and run the tests of our application we use github actions.
 We use two build pipelines one for the main and one for the development branch.
 
-# Start Actions
+## Start Actions
 
 The two seperate Actions get started by either push or Pull requests on the selected branch:
 
@@ -26,7 +26,7 @@ on:
     branches: [ "development" ]
 ```
 
-# The Build
+## The Build
 
 In both pipelines we use an Ubuntu build container to run the build job.
 As in the development we use maven as our dependency manager and jdk 17.
@@ -44,16 +44,16 @@ steps:
       run: mvn -B package --file pom.xml
 ```
 
-# The Testing
+## The Testing
 
-The test are started with the build process of maven by the following lines:
+xxxxxxxxxx @GetMapping("/reset")    public ResponseEntity<String> MessageReset() {        if(apiMessageDefault.isBlank()) {            return new ResponseEntity<>("Default message is not set.", HttpStatus.INTERNAL_SERVER_ERROR);        }        currentApiMessage = apiMessageDefault;        return new ResponseEntity<>(currentApiMessage, HttpStatus.OK);    }java
 
 ```
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 ```
 
-# The Download
+## The Download
 
 To be able to download the build artifact the pipelines are finished with the following settings:
 

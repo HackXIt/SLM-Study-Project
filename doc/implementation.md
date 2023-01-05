@@ -12,8 +12,7 @@ public class MessageController {
     private String currentApiMessage;
 ```
 
-
-# feature/api-message
+## feature/api-message
 
 The `message` feature returns either the current service message or the default service message, if the `current` message hasn't been set.
 
@@ -30,7 +29,7 @@ The `message` feature returns either the current service message or the default 
     }
 ```
 
-# feature/api-message-set
+## feature/api-message-set
 
 The `set` feature is supposed to **set** the current message of the server to a provided message.
 
@@ -42,7 +41,7 @@ The `set` feature is supposed to **set** the current message of the server to a 
     }
 ```
 
-# feature/api-message-reset
+## feature/api-message-reset
 
 The `reset` feature is supposed to **reset** the current message to a <u>default message</u> of the server.
 

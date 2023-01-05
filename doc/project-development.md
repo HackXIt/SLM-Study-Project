@@ -19,7 +19,9 @@ The given project requirements read as follows:
 >
 > You can use external resources as long as you mark them: “ // taken from: <URL> ”
 
-With that in mind, we wrote down the following 14 User stories:
+## User stories
+
+With the project requirements in mind, we wrote down the following 14 User stories:
 
 - [As a maintainer, I want to avoid unnecessary binary files in the repository](https://github.com/HackXIt/SLM-Study-Project/issues/15)
 - [As a developer, I want the project to be automatically built and tested on each uploaded commit](https://github.com/HackXIt/SLM-Study-Project/issues/14)
@@ -54,7 +56,7 @@ Obviously, there is a lot more we could have done to reflect a real-life scenari
 
 To document what was done in our development, we decided on submitting screenshots of the final state of all those user-stories.
 
-# Final state of user-stories
+## Final state of user-stories
 
 1. ![user-story-1](https://github.com/HackXIt/SLM-Study-Project/blob/main/doc/attachments/user-story-1.png?raw=true)
 2. ![user-story-2](https://github.com/HackXIt/SLM-Study-Project/blob/main/doc/attachments/user-story-2.png?raw=true)

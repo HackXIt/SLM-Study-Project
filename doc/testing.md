@@ -9,11 +9,11 @@ In the following sections, we document what our unit tests do. The sections are 
 
 Since the internal state of the application stays the same throughout test execution, we needed to set the annotation `@DirtiesContext` for some testcases, otherwise one test could affect the expected initial state of another.
 
-# feature/api-message
+## feature/api-message
 
 The `message` feature returns either the current service message or the default service message, if the `current` message hasn't been set.
 
-## GetMessageTest
+### GetMessageTest
 
 This testcase verifies the existance and functionality of the APi-path `api/message`.
 On initial start of the webpage, the service doesn't have an initialized `message`, which is why we provide a default message.
@@ -31,7 +31,7 @@ void GetMessageTest() throws Exception {
 }
 ```
 
-## GetMessageWithoutDefaultTest
+### GetMessageWithoutDefaultTest
 
 This testcase verifies the expected failure of `api/message`.
 
@@ -56,12 +56,12 @@ void GetMessageWithoutDefaultTest() throws Exception {
 
 
 
-# feature/api-message-set
+## feature/api-message-set
 
 The `set` feature is supposed to **set** the current message of the server to a provided message.
 We did not set any limitations due to the small scale of the project, as such the API simply sets the message without checking the provided string.
 
-## GetMessageSetTest
+### GetMessageSetTest
 
 This test verifies the normal behaviour of the API call, by setting the current message to a string and verifying the response header as well as the content, which should correspond to the message set.
 
@@ -75,7 +75,7 @@ void GetMessageSetTest() throws Exception {
 }
 ```
 
-## GetMessageSetMultipleWordsTest
+### GetMessageSetMultipleWordsTest
 
 This test verifies if the message can be set to a message containing spaces, which implicitly gets parsed to a correct URL by the mocking client.
 In practice, the used test string would look like so:
@@ -96,12 +96,12 @@ void GetMessageSetMultipleWordsTest() throws Exception {
 
 
 
-# feature/api-message-reset
+## feature/api-message-reset
 
 The `reset` feature is supposed to **reset** the current message to a <u>default message</u> of the server.
 We adapted the requirement a little bit, which is why we also added an API path for a `default` message, so we can make sure that there's a message to begin with, without requiring the implementation of `set`.
 
-## GetMessageResetTest
+### GetMessageResetTest
 
 This testcase verifies the existence and functionality of the API-path `/api/message/reset` by expecting a response of `200` when calling it with the `MockMvc` client.
 
@@ -121,7 +121,7 @@ void GetMessageResetTest() throws Exception {
 }
 ```
 
-## GetMessageDefaultTest
+### GetMessageDefaultTest
 
 This testcase verifies the `default` API-path functionality.
 
@@ -146,7 +146,7 @@ void GetMessageDefaultTest() throws Exception {
 }
 ```
 
-## GetMessageResetWithoutDefaultTest
+### GetMessageResetWithoutDefaultTest
 
 This testcase verifies the expected failure of the `reset` API-path.
 
@@ -176,19 +176,19 @@ void GetMessageResetWithoutDefaultTest() throws Exception {
 To implement a test, we used the testing features of the [spring boot framework](https://docs.spring.io/spring-boot/docs/1.5.2.RELEASE/reference/html/boot-features-testing.html).
 Initially a test class looks like the following example:
 
-![image-20221125170335458](https://github.com/HackXIt/SLM-Study-Project/blob/documentation/doc/attachments/image-20221125170335458.png)
+![image-20221125170335458](https://github.com/HackXIt/SLM-Study-Project/blob/main/doc/attachments/image-20221125170335458.png)
 
 As intended in TDD, even this simple test class will initially fail:
 
-![MessageControllerClass_build-error.jpg](https://github.com/HackXIt/SLM-Study-Project/blob/documentation/doc/attachments/MessageControllerClass_build-error.jpg)
+![MessageControllerClass_build-error.jpg](https://github.com/HackXIt/SLM-Study-Project/blob/main/doc/attachments/MessageControllerClass_build-error.jpg)
 
 The process of TDD dictates, that we now refactor our code to fix this initial error:
 
-![MessageControllerClass_build-fix.jpg](https://github.com/HackXIt/SLM-Study-Project/blob/documentation/doc/attachments/MessageControllerClass_build-fix.jpg)
+![MessageControllerClass_build-fix.jpg](https://github.com/HackXIt/SLM-Study-Project/blob/main/doc/attachments/MessageControllerClass_build-fix.jpg)
 
-![MessageControllerClass_build-fix2.jpg](https://github.com/HackXIt/SLM-Study-Project/blob/documentation/doc/attachments/MessageControllerClass_build-fix2.jpg)
+![MessageControllerClass_build-fix2.jpg](https://github.com/HackXIt/SLM-Study-Project/blob/main/doc/attachments/MessageControllerClass_build-fix2.jpg)
 
-![MessageControllerClass_git-commits.jpg](https://github.com/HackXIt/SLM-Study-Project/blob/documentation/doc/attachments/MessageControllerClass_git-commits.jpg)
+![MessageControllerClass_git-commits.jpg](https://github.com/HackXIt/SLM-Study-Project/blob/main/doc/attachments/MessageControllerClass_git-commits.jpg)
 
 Great! 
 
@@ -203,7 +203,7 @@ To help us implement our testcases for the actual API paths, we required some ad
 For this we used the provided `MockMvc`, which is a complete `mocking` client to do web requests. 
 The client is very useful, since it provides mechanism to `assert` and `expect` results from the reponse of the API, which allowed us to design our API with TDD as process.
 
-![MockMvc_usage-explanation.jpg](https://github.com/HackXIt/SLM-Study-Project/blob/documentation/doc/attachments/MockMvc_usage-explanation.jpg)
+![MockMvc_usage-explanation.jpg](https://github.com/HackXIt/SLM-Study-Project/blob/main/doc/attachments/MockMvc_usage-explanation.jpg)
 
 In the feature branch, the process was continued until all requirements of the feature were implemented and commited. 
 
