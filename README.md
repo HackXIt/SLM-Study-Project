@@ -22,17 +22,17 @@ project, as well as using proper development procedures in git. (User-Stories, R
 
 # REST API Goals
 
-- [ ] The service should be able to manage a centrally stored message.
-- [ ] The service should be able to deliver the message to a client.
-- [ ] The service should be able to set _it_ to a specific message. (it = centrally stored message)
-- [ ] The service should be able to reset the message.
+- [x] The service should be able to manage a centrally stored message.
+- [x] The service should be able to deliver the message to a client.
+- [x] The service should be able to set _it_ to a specific message. (it = centrally stored message)
+- [x] The service should be able to reset the message.
 
 # General Project Requirements
 
-- [ ] Documentation of "the whole process" regarding the project
-- [ ] Documentation of "the user stories" (i.e. have user-stories in general)
-- [ ] Documentation of "the usage of the software" (i.e. manual of the API)
-- [ ] The repository URL needs to be documented and be publicy viewable
+- [x] Documentation of "the whole process" regarding the project
+- [x] Documentation of "the user stories" (i.e. have user-stories in general)
+- [x] Documentation of "the usage of the software" (i.e. manual of the API)
+- [x] The repository URL needs to be documented and be publicy viewable
 
 # Grading criteria
 
